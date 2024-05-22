@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import javax.sound.midi.Soundbank;
+import java.util.List;
 
 @SpringBootApplication
 public class AdvancedJpaHibernateApplication {
@@ -26,9 +27,39 @@ public class AdvancedJpaHibernateApplication {
 			//deleteInstructor(appDAO);
 			//findInstructorDetail(appDAO);
 			//deleteInstructorDetail(appDAO);
-			createInstructorWithCourses(appDAO);
+			//createInstructorWithCourses(appDAO);
+			//findInstructorWithCourses(appDAO);
+			findCoursesForInstructor(appDAO);
 	};
 }
+
+	private void findCoursesForInstructor(AppDAO appDAO) {
+
+		int theId=1;
+		System.out.println("Finding the Instructor id: " + theId);
+
+		Instructor tempInstructor= appDAO.findInstructorById(theId);
+
+		System.out.println("tempInstructor: " + tempInstructor);
+
+		//find courses for instructor
+		System.out.println("Finding courses for instructor id: " + theId);
+		List<Course> courses = appDAO.findCoursesByInstructorId(theId);
+		tempInstructor.setCourses(courses);
+		System.out.println("the associated Courses: " + tempInstructor.getCourses());
+		System.out.println("Done.");
+	}
+
+	private void findInstructorWithCourses(AppDAO appDAO) {
+		//find the instructor
+		int theId=1;
+		Instructor tempInstructor= appDAO.findInstructorById(theId);
+		//finding courses for instructor
+		List<Course> courses = appDAO.findCoursesByInstructorId(theId);
+
+		System.out.println(tempInstructor.getCourses());
+		System.out.println("Done.");
+	}
 
 	private void createInstructorWithCourses(AppDAO appDAO) {
 		Instructor tempInstructor= new Instructor("Rahul", "Yadav", "rahul@gmail.com");

@@ -1,11 +1,15 @@
 package com.practice.advancedjpahibernate.dao;
 
+import com.practice.advancedjpahibernate.entity.Course;
 import com.practice.advancedjpahibernate.entity.Instructor;
 import com.practice.advancedjpahibernate.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Repository
 public class AppDAOImpl implements AppDAO{
@@ -51,10 +55,23 @@ public class AppDAOImpl implements AppDAO{
         //find the instructor detail by id
         InstructorDetail tempInstructorDetail = entityManager.find(InstructorDetail.class, theId);
 
-        //remove the associated bi-directional link
+        //remove the associated bidirectional link
         tempInstructorDetail.getInstructor().setInstructorDetail(null);
 
         //delete the instructor detail
         entityManager.remove(tempInstructorDetail);
+    }
+
+    @Override
+    public List<Course> findCoursesByInstructorId(int theId) {
+        //create a query
+        TypedQuery<Course> query=entityManager.createQuery(
+                "from Course where instructor.id = :data", Course.class);
+
+        query.setParameter("data", theId);
+
+        //retrieve the result
+        List<Course> courses = query.getResultList();
+        return courses;
     }
 }
