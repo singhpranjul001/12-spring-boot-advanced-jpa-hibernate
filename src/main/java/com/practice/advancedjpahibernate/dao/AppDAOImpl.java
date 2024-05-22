@@ -1,6 +1,7 @@
 package com.practice.advancedjpahibernate.dao;
 
 import com.practice.advancedjpahibernate.entity.Instructor;
+import com.practice.advancedjpahibernate.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,5 +38,10 @@ public class AppDAOImpl implements AppDAO{
 
         //delete the instructor
         entityManager.remove(tempInstructor);
+    }
+
+    @Override
+    public InstructorDetail findInstructorDetailById(int theId) {
+        return entityManager.find(InstructorDetail.class, theId);
     }
 }
