@@ -1,6 +1,7 @@
 package com.practice.advancedjpahibernate;
 
 import com.practice.advancedjpahibernate.dao.AppDAO;
+import com.practice.advancedjpahibernate.entity.Course;
 import com.practice.advancedjpahibernate.entity.Instructor;
 import com.practice.advancedjpahibernate.entity.InstructorDetail;
 import org.springframework.boot.CommandLineRunner;
@@ -24,9 +25,37 @@ public class AdvancedJpaHibernateApplication {
 			//findInstructor(appDAO);
 			//deleteInstructor(appDAO);
 			//findInstructorDetail(appDAO);
-			deleteInstructorDetail(appDAO);
+			//deleteInstructorDetail(appDAO);
+			createInstructorWithCourses(appDAO);
 	};
 }
+
+	private void createInstructorWithCourses(AppDAO appDAO) {
+		Instructor tempInstructor= new Instructor("Rahul", "Yadav", "rahul@gmail.com");
+
+		//create instructor detail
+		InstructorDetail tempInstructorDetail=new InstructorDetail("http://www.youtube.com/rahul",
+				"Gaming");
+
+		//associate the objects
+		tempInstructor.setInstructorDetail(tempInstructorDetail);
+
+		//create some courses
+		Course tempCourse1= new Course("Gaming Lesson 1- How to Become an Alpha Gamer.");
+		Course tempCourse2= new Course("Gaming Lesson 2- How to Become an Beta Gamer.");
+		Course tempCourse3= new Course("Gaming Lesson 3- How to Become an Sigma Gamer.");
+
+		tempInstructor.add(tempCourse1);
+		tempInstructor.add(tempCourse2);
+		tempInstructor.add(tempCourse3);
+
+		//save the instructor
+		//Note: This will also save the courses due to CascadeType.PERSIST
+		System.out.println("Saving the instructor: "+ tempInstructor);
+		System.out.println("The Courses: " + tempInstructor.getCourses());
+		appDAO.save(tempInstructor);
+		System.out.println("Done.");
+	}
 
 	private void deleteInstructorDetail(AppDAO appDAO) {
 		int theId = 1;
@@ -66,12 +95,14 @@ public class AdvancedJpaHibernateApplication {
 	}
 
 	private void createInstructor(AppDAO appDAO) {
-		/*//create the instructor
+		/*
+		//create the instructor
 		Instructor tempInstructor= new Instructor("Pranjul", "Singh", "pranjul.singh@gmail.com");
 
 		//create instructor detail
 		InstructorDetail tempInstructorDetail=new InstructorDetail("http://www.youtube.com/pranjul_singh",
-				"Chess");*/
+				"Chess");
+				*/
 
 		Instructor tempInstructor= new Instructor("Ritika", "Roy", "royritika@gmail.com");
 
