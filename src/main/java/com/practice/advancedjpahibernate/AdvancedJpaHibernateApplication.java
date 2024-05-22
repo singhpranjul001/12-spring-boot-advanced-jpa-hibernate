@@ -29,7 +29,7 @@ public class AdvancedJpaHibernateApplication {
 }
 
 	private void deleteInstructorDetail(AppDAO appDAO) {
-		int theId = 3;
+		int theId = 1;
 		System.out.println("Deleting the instructor detail id: " + theId);
 
 		appDAO.deleteInstructorDetailById(theId);
