@@ -29,9 +29,21 @@ public class AdvancedJpaHibernateApplication {
 			//deleteInstructorDetail(appDAO);
 			//createInstructorWithCourses(appDAO);
 			//findInstructorWithCourses(appDAO);
-			findCoursesForInstructor(appDAO);
+			//findCoursesForInstructor(appDAO);
+			findInstructorAndCourseWithJoinFetch(appDAO);
 	};
 }
+
+	private void findInstructorAndCourseWithJoinFetch(AppDAO appDAO) {
+		int theId=1;
+		System.out.println("Finding the Instructor: " + theId);
+
+		Instructor tempInstructor = appDAO.findInstructorAndCourseWithJoinFetch(theId);
+
+		System.out.println("tempInstructor: " + tempInstructor);
+		System.out.println("the associated courses: " + tempInstructor.getCourses());
+		System.out.println("Done");
+	}
 
 	private void findCoursesForInstructor(AppDAO appDAO) {
 
