@@ -30,9 +30,36 @@ public class AdvancedJpaHibernateApplication {
 			//createInstructorWithCourses(appDAO);
 			//findInstructorWithCourses(appDAO);
 			//findCoursesForInstructor(appDAO);
-			findInstructorAndCourseWithJoinFetch(appDAO);
+			//findInstructorAndCourseWithJoinFetch(appDAO);
+			//updateInstructor(appDAO);
+			//updateCourse(appDAO);
+			//deleteInstructor(appDAO);
+			deleteCourse(appDAO);
 	};
 }
+
+	private void deleteCourse(AppDAO appDAO) {
+		int theId=10;
+		appDAO.deleteCourseById(theId);
+		System.out.println("Done.");
+	}
+
+	private void updateCourse(AppDAO appDAO) {
+		int theId=10;
+		Course tempCourse = appDAO.findCourseById(theId);
+		tempCourse.setTitle("How to cultivate winner mindset.");
+		appDAO.updateCourse(tempCourse);
+		System.out.println("Done");
+	}
+
+	private void updateInstructor(AppDAO appDAO) {
+		int theId=1;
+		System.out.println("Finding the instructor with id: " + theId);
+		Instructor tempInstructor = appDAO.findInstructorById(theId);
+		tempInstructor.setLastName("Gotham");
+		appDAO.update(tempInstructor);
+		System.out.println("Done.");
+	}
 
 	private void findInstructorAndCourseWithJoinFetch(AppDAO appDAO) {
 		int theId=1;
@@ -122,7 +149,7 @@ public class AdvancedJpaHibernateApplication {
 	}
 
 	private void deleteInstructor(AppDAO appDAO) {
-		int theId=2;
+		int theId=1;
 		System.out.println("Deleting the instructor id: "+ theId);
 		appDAO.deleteInstructorById(theId);
 		System.out.println("Done.");
