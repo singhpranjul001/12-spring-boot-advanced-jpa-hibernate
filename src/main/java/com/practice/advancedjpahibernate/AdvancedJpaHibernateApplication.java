@@ -4,6 +4,7 @@ import com.practice.advancedjpahibernate.dao.AppDAO;
 import com.practice.advancedjpahibernate.entity.Course;
 import com.practice.advancedjpahibernate.entity.Instructor;
 import com.practice.advancedjpahibernate.entity.InstructorDetail;
+import com.practice.advancedjpahibernate.entity.Review;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,9 +35,59 @@ public class AdvancedJpaHibernateApplication {
 			//updateInstructor(appDAO);
 			//updateCourse(appDAO);
 			//deleteInstructor(appDAO);
-			deleteCourse(appDAO);
+			//deleteCourse(appDAO);
+
+			//createCourseAndReviews(appDAO);
+			//retreiveCourseAndReviews(appDAO);
+			deleteCourseAndReviews(appDAO);
 	};
 }
+
+	private void deleteCourseAndReviews(AppDAO appDAO) {
+		int theId=10;
+
+		System.out.println("Deleting course id: " + theId);
+
+		appDAO.deleteCourseById(theId);
+
+		System.out.println("Done.");
+	}
+
+	private void retreiveCourseAndReviews(AppDAO appDAO) {
+
+		//get the course and reviews
+		int theId=10;
+		Course tempCourse = appDAO.findCourseAndReviewsByCourseId(theId);
+
+		//print the course
+		System.out.println(tempCourse);
+
+		//print the reviews
+		System.out.println(tempCourse.getReviews());
+
+		System.out.println("Done.");
+	}
+
+	private void createCourseAndReviews(AppDAO appDAO) {
+
+		//create a course
+		Course tempCourse = new Course("How to learn Spring Boot.");
+
+		//add some reviews
+		tempCourse.addReview(new Review("Great course, learned a lot."));
+		tempCourse.addReview(new Review("Average course, could be better."));
+		tempCourse.addReview(new Review("Lovely!! Though could have been better."));
+
+		//save the course...and leverage the cascade ALL
+		System.out.println("Saving the courses.");
+		System.out.println(tempCourse);
+		System.out.println(tempCourse.getReviews());
+
+		appDAO.save(tempCourse);
+
+		System.out.println("Done.");
+
+	}
 
 	private void deleteCourse(AppDAO appDAO) {
 		int theId=10;
